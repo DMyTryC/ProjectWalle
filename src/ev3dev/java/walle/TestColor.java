@@ -41,42 +41,54 @@ public static boolean goMessage() {
 			boolean again = true;
 			
 			if (!goMessage()) System.exit(0);
+			System.out.println("LAST VERSION");
 			
 			EV3ColorSensor colorSensor = new EV3ColorSensor(SensorPort.S4);
 
-			SampleProvider average = new MeanFilter(colorSensor.getRGBMode(), 1);
+			SampleProvider average = new MeanFilter(colorSensor.getRGBMode(), 15);
 			colorSensor.setFloodlight(Color.WHITE);
 			
 			System.out.println("Press enter to calibrate blue...");
 			s.next();
 			float[] blue = new float[average.sampleSize()];
 			average.fetchSample(blue, 0);
+			System.out.println("Blue calibrated");
 			
 			System.out.println("Press enter to calibrate white...");
 			s.next();
 			float[] white = new float[average.sampleSize()];
 			average.fetchSample(white, 0);
+			System.out.println("White calibrated");
 			
 			System.out.println("Press enter to calibrate yellow...");
 			s.next();
 			float[] yellow = new float[average.sampleSize()];
-			average.fetchSample(yellow, 0);			
+			average.fetchSample(yellow, 0);	
+			System.out.println("Yellow calibrated");
 			
 			System.out.println("Press enter to calibrate red...");
 			s.next();
 			float[] red = new float[average.sampleSize()];
 			average.fetchSample(red, 0);
+			System.out.println("Red calibrated");
 			
 			System.out.println("Press enter to calibrate green...");
 			s.next();
 			float[] green = new float[average.sampleSize()];
 			average.fetchSample(green, 0);
+			System.out.println("Green calibrated");
 
 			System.out.println("Press enter to calibrate black...");
 			s.next();
 			float[] black = new float[average.sampleSize()];
 			average.fetchSample(black, 0);
 			System.out.println("Black calibrated");
+			
+			System.out.println("Press enter to calibrate gray...");
+			s.next();
+			float[] gray = new float[average.sampleSize()];
+			average.fetchSample(black, 0);
+			System.out.println("Gray calibrated");
 			
 			
 			while (again) {
@@ -136,6 +148,14 @@ public static boolean goMessage() {
 					color = "yellow";
 				}
 				
+				scalaire = TestColor.scalaire(sample, gray);
+				//System.out.println(scalaire);
+				//s.next();
+				if (scalaire < minscal) {
+					minscal = scalaire;
+					color = "gray";
+				}
+				
 				System.out.println("The color is " + color + " \n");
 				System.out.println("Do you want to exit and copy data to a file? Y/N");
 				
@@ -156,12 +176,28 @@ public static boolean goMessage() {
 				output = new FileOutputStream("config.properties");
 
 				// set the properties value
-				prop.setProperty("blue", blue.toString());
-				prop.setProperty("red", blue.toString());
-				prop.setProperty("green", blue.toString());
-				prop.setProperty("black", blue.toString());
-				prop.setProperty("yellow", blue.toString());
-				prop.setProperty("white", blue.toString());
+				
+				for (int i = 0; i < 3; ++i) {
+					prop.setProperty("blue"+i, ""+blue[i]);
+				}
+				for (int i = 0; i < 3; ++i) {
+					prop.setProperty("red"+i, ""+red[i]);
+				}
+				for (int i = 0; i < 3; ++i) {
+					prop.setProperty("yellow"+i, ""+yellow[i]);
+				}
+				for (int i = 0; i < 3; ++i) {
+					prop.setProperty("white"+i, ""+white[i]);
+				}
+				for (int i = 0; i < 3; ++i) {
+					prop.setProperty("gray"+i, ""+gray[i]);
+				}
+				for (int i = 0; i < 3; ++i) {
+					prop.setProperty("black"+i, ""+black[i]);
+				}
+				for (int i = 0; i < 3; ++i) {
+					prop.setProperty("green"+i, ""+green[i]);
+				}
 
 				// save properties to project root folder
 				prop.store(output, null);
@@ -176,12 +212,7 @@ public static boolean goMessage() {
 						e.printStackTrace();
 					}
 				}
-
 			}
-			
-			
-			
-			
 			
 		} catch (Throwable t) {
 			t.printStackTrace();

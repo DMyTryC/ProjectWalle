@@ -19,7 +19,7 @@ public class CherchePallet {
 	}
 
 	public void run() {
-		dd.rotate(775);
+		dd.rotate(1550);
 
 		// get an instance of this sensor in measurement mode
 		SampleProvider distance = us.getDistanceMode();
@@ -34,8 +34,8 @@ public class CherchePallet {
 			d1 = sample[0];
 			if (d2 != 0){
 				float diff = Math.abs(d1 - d2);
-				System.out.println("diff" + diff);
-				if (diff > 80){
+				System.out.println("diff" + diff + "\n");
+				if (diff > 70){
 					dd.stop();
 				}
 			}

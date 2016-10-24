@@ -9,6 +9,9 @@ public class CherchePallet {
 
 	DifferentialDrivePos dd;
 	EV3UltrasonicSensor us;
+	
+	private float d1 = 0;
+	private float d2 = 0;
 
 	public CherchePallet() {
 		dd = new DifferentialDrivePos(MotorPort.B, MotorPort.C);
@@ -28,9 +31,15 @@ public class CherchePallet {
 		for (int i = 0; i < 50; i++) {
 			distance.fetchSample(sample, 0);
 			System.out.println("Dist " + sample[0]);
-			if (sample[0] <= 500) {
-				dd.stop();
+			d1 = sample[0];
+			if (d2 != 0){
+				float diff = Math.abs(d1 - d2);
+				System.out.println("diff" + diff);
+				if (diff > 80){
+					dd.stop();
+				}
 			}
+			d2 = d1;
 		}
 	}
 

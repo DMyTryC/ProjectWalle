@@ -10,7 +10,7 @@ public class ColorSensor
     private static float[] path_color;
     private static SampleProvider average;
     private static EV3ColorSensor colorSensor;
-    private final static double ERROR = 25;
+    private final static double ERROR = 30;
     Scanner sc = new Scanner(System.in);
 
     public ColorSensor(String port)

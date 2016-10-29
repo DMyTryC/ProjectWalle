@@ -7,8 +7,7 @@ public class DifferentialDrive
     private EV3LargeRegulatedMotor mRightMotor;
 
     private final static int SPEED = 100;
-
-
+ 
     public DifferentialDrive(String left_port, String right_port)
     {
         mLeftMotor = new EV3LargeRegulatedMotor(left_port);
@@ -60,5 +59,13 @@ public class DifferentialDrive
         mRightMotor.forward();
         mLeftMotor.setSpeed(SPEED);
         mRightMotor.setSpeed(SPEED);
+    }
+    
+    public void rotate(int angle){
+    	mLeftMotor.rotate(angle);
+    }
+    
+    public void rotateTo(int angle){
+    	mRightMotor.rotateTo(angle);
     }
 }

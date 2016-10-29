@@ -31,6 +31,7 @@ public class EV3DevSysfs extends Device {
 				BufferedWriter bw = new BufferedWriter(new FileWriter(filePath));
 				bw.write(value);
 				bw.close();
+				
 			}
 		} catch (IOException ex) {
 			return false;

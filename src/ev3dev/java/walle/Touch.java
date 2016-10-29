@@ -9,7 +9,7 @@ public class Touch
         try {
         	log("Program Starting");
 
-        TouchSensor uTouch = new TouchSensor(SensorPort.S2);
+        TouchSensor uTouch = new TouchSensor(SensorPort.S1);
         waitForTouch(uTouch);
 
         log("Program Ending");

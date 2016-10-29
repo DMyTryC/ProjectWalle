@@ -7,8 +7,8 @@ import ev3dev.hardware.sensor.ev3.EV3UltrasonicSensor;
 
 public class CherchePallet {
 
-	DifferentialDrivePos dd;
-	EV3UltrasonicSensor us;
+	private DifferentialDrivePos dd;
+	private EV3UltrasonicSensor us;
 	
 	private float d1 = 0;
 	private float d2 = 0;
@@ -41,11 +41,6 @@ public class CherchePallet {
 			}
 			d2 = d1;
 		}
-	}
-
-	public static void main(String[] args) {
-		CherchePallet c = new CherchePallet();
-		c.run();
 	}
 
 }

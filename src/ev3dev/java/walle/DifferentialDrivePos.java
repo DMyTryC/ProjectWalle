@@ -5,7 +5,6 @@ import ev3dev.hardware.motor.EV3LargeRegulatedMotor;
 public class DifferentialDrivePos {
 	private EV3LargeRegulatedMotor mLeftMotor;
 	private EV3LargeRegulatedMotor mRightMotor;
-
 	private final static int SPEED = 200;
 	private final static int RAMP = 2000;
 

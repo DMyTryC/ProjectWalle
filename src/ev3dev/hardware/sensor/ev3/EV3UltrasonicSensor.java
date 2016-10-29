@@ -140,7 +140,7 @@ public class EV3UltrasonicSensor extends BaseSensor {
 
 
 private class DistanceMode extends EV3DevSensorMode {
-    private static final String   MODE = "US-DIST-CM";
+    private static final String MODE = "US-DIST-CM";
     private static final float toSI = 1f;
 
 	private File pathDevice = null;

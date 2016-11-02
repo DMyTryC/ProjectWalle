@@ -1,44 +1,40 @@
 package ev3dev.java.walle;
 
-import java.util.Scanner;
-
+import lejos.utility.Delay;
 import ev3dev.hardware.motor.EV3MediumRegulatedMotor;
 
 public class Grabber {
 
 	private EV3MediumRegulatedMotor gm;
-	private static final int SPEED = 200;
+	private static final int SPEED = 400;
+	private static final int DELAY = 500;
 
 	public Grabber(String sensorPort) {
-		Scanner sc = new Scanner(System.in);
 		gm = new EV3MediumRegulatedMotor(sensorPort);
-		
+
 		System.out.println("run");
 		System.out.println("speed1 : " + gm.getSpeed());
-		gm.setSpeed(SPEED);
-		System.out.println("input");
-		sc.next();
+		Delay.msDelay(DELAY);
 		gm.setSpeed(SPEED);
 		System.out.println("speed2 : " + gm.getSpeed());
-		sc.close();
 	}
 
 	public void open() {
 		gm.forward();
-		
-		if (gm.isStalled()) {
-			gm.stop();
-			System.out.println("Can't open anymore");
+		Delay.msDelay(DELAY);
+		while (!(gm.isStalled())) {
+			gm.forward();
 		}
 	}
 
-	public void close() {
-		gm.backward();
+	public void test() {
+		this.open();
+		Delay.msDelay(DELAY);
+		this.close(3400);
+	}
+
+	public void run() {
 		
-		if (gm.isStalled()) {
-			gm.stop();
-			System.out.println("Can't close anymore");
-		}
 	}
 
 	public void open(int angle) {

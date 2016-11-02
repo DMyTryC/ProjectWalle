@@ -1,24 +1,31 @@
 package ev3dev.java.walle;
 
-import ev3dev.hardware.motor.EV3LargeRegulatedMotor;
+import java.util.Scanner;
+
+import ev3dev.hardware.motor.EV3MediumRegulatedMotor;
 
 public class Grabber {
 
-	private EV3LargeRegulatedMotor gm;
+	private EV3MediumRegulatedMotor gm;
 	private static final int SPEED = 200;
 
 	public Grabber(String sensorPort) {
-		gm = new EV3LargeRegulatedMotor(sensorPort);
-
+		Scanner sc = new Scanner(System.in);
+		gm = new EV3MediumRegulatedMotor(sensorPort);
+		
+		System.out.println("run");
+		System.out.println("speed1 : " + gm.getSpeed());
 		gm.setSpeed(SPEED);
+		System.out.println("input");
+		sc.next();
+		gm.setSpeed(SPEED);
+		System.out.println("speed2 : " + gm.getSpeed());
+		sc.close();
 	}
 
 	public void open() {
-		gm.setSpeed(SPEED);
-		gm.setRampUp(0);
-		gm.setRampDown(0);
-
 		gm.forward();
+		
 		if (gm.isStalled()) {
 			gm.stop();
 			System.out.println("Can't open anymore");
@@ -26,14 +33,8 @@ public class Grabber {
 	}
 
 	public void close() {
-		System.out.println("run");
-		System.out.println("speed1 : " + gm.getSpeed());
-		gm.setSpeed(SPEED);
-		gm.setRampUp(0);
-		gm.setRampDown(0);
-		System.out.println("speed2 : " + gm.getSpeed());
-		
 		gm.backward();
+		
 		if (gm.isStalled()) {
 			gm.stop();
 			System.out.println("Can't close anymore");

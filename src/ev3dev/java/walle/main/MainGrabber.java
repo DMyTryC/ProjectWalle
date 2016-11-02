@@ -7,6 +7,7 @@ public class MainGrabber {
 	public static void main(String[] args){
 		Grabber g = new Grabber(MotorPort.D);
 		
-		g.close();
+		g.test();
 	}
 }
+ 

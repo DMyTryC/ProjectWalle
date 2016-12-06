@@ -7,9 +7,9 @@ public class DifferentialDrive
     private EV3LargeRegulatedMotor mLeftMotor;
     private EV3LargeRegulatedMotor mRightMotor;
 
-	private final static int SPEED = 500;
+	private static int SPEED = 300;
 	private final static int DELAY = 2000;
-	private final static int RAMP = 1500;
+	private static int RAMP = 500;
 	
     public DifferentialDrive(String left_port, String right_port) {
         mLeftMotor = new EV3LargeRegulatedMotor(left_port);
@@ -274,5 +274,17 @@ public class DifferentialDrive
 			mRightMotor.stop();
 			mLeftMotor.stop();
 		}
+	}
+	
+	public boolean isMoving(){
+		return ((mLeftMotor.isMoving()) || (mRightMotor.isMoving()));
+	}
+	
+	public void changeSpeed(int speed, int time){
+		SPEED = speed;
+		RAMP = time;
+		mLeftMotor.setRampDown(500);
+		mRightMotor.setRampDown(500);
+		set();
 	}
 }

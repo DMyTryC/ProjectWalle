@@ -54,4 +54,7 @@ public class ColorSensor {
 		}
 
 	}
+	public void reCalibrate() {
+		CalibrateColor.calibrate(average);
+	}
 }

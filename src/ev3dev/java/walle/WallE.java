@@ -1,75 +1,46 @@
 package ev3dev.java.walle;
 
-import ev3dev.hardware.Battery;
-import ev3dev.hardware.port.MotorPort;
-import ev3dev.hardware.port.SensorPort;
-import ev3dev.hardware.motor.EV3LargeRegulatedMotor;
-import ev3dev.hardware.sensor.ev3.EV3IRSensor;
-import lejos.robotics.SampleProvider;
-import lejos.utility.Delay;
+import java.util.Scanner;
+
+import ev3dev.java.walle.robot.Robot;
 
 public class WallE {
-    
-    //Robot Definition
-	private final static EV3LargeRegulatedMotor grab = new EV3LargeRegulatedMotor(MotorPort.D);
-	private final static EV3LargeRegulatedMotor mA = new EV3LargeRegulatedMotor(MotorPort.C);
-    private final static EV3LargeRegulatedMotor mB = new EV3LargeRegulatedMotor(MotorPort.B);
-    private final static EV3IRSensor ir1 = new EV3IRSensor(SensorPort.S2);
 
-    //Configuration
-    private final static int motorSpeed = 500;
-    private final static int rampSpeed = 2000;
-    
-    public static void main(String[] args) {
-        
-        final SampleProvider sp = ir1.getDistanceMode();
-        int distance = 255;
+	public static void main(String[] args) {
+		Robot r = new Robot();
+		boolean go = true;
+		Scanner s = new Scanner(System.in);
+		while (go) {
+			System.out.println("Choisissez le programme a exectuer : ");
+			System.out.println("1 : Tester les couleurs");
+			System.out.println("2 : Tester les moteurs");
+			System.out.println("3 : Recalibrer les couleurs");
+			System.out.println("4 : Tester DifferentialDrive");
+			System.out.println("5 : Tester cherchePalet");
 
-        final int distance_threshold = 350;
-        
-        
-        //Robot control loop
-        final int iteration_threshold = 200;
-        for(int i = 0; i <= iteration_threshold; i++) {
-            forward();
+			int choix = Integer.parseInt(s.nextLine());
 
-            float [] sample = new float[sp.sampleSize()];
-            sp.fetchSample(sample, 0);
-            distance = (int)sample[0];
-            if(distance <= distance_threshold){
-                backwardWithTurn();
-            }
-
-            System.out.print("\033[0GDistance: " + distance + "    ");
-        }
-
-        mA.stop();
-        mB.stop();
-        System.exit(0);
-    }
-    
-    private static void forward(){
-        mA.setSpeed(motorSpeed);
-        mB.setSpeed(motorSpeed);
-        mA.setRampUp(rampSpeed);
-        mB.setRampUp(rampSpeed);
-        mA.setRampDown(rampSpeed);
-        mB.setRampDown(rampSpeed);
-        
-        mA.forward();
-        mB.forward();
-    }
-    
-    private static void backwardWithTurn(){
-        mA.backward();
-        mB.backward();
-        Delay.msDelay(1000);
-        mA.stop();
-        mB.stop();
-        mA.backward();
-        mB.forward();
-        Delay.msDelay(1000);
-        mA.stop();
-        mB.stop();
-    }
+			switch (choix) {
+			case 1:
+				r.testColor();
+				break;
+			case 2:
+				r.variousTest();
+				break;
+			case 3:
+				r.reCalibrate();
+				break;
+			case 4:
+				r.ddTest();
+				break;
+			case 5:
+				r.cherchePalet();
+				break;
+			}
+			
+			System.out.println("Voulez vous continuer ? Y/N");
+			go = (s.nextLine() == "Y");
+		}
+		s.close();
+	}
 }

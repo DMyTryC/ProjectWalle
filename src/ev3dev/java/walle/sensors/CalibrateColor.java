@@ -50,7 +50,6 @@ public class CalibrateColor {
 	}
 
 	private CalibrateColor() {
-		
 	}
 
 	public static void calibrate(SampleProvider average) {
@@ -109,17 +108,20 @@ public class CalibrateColor {
 		while (again) {
 			float[] sample = new float[average.sampleSize()];
 			System.out.println("\nPress enter to detect a color...");
+
 			s.next();
 			average.fetchSample(sample, 0);
 
 			testColor(sample);
 
-			System.out.println("Do you want to exit the test and copy data to a file? Y/N");
+			System.out
+					.println("Do you want to exit the test and copy data to a file? Y/N");
 
 			if (s.next().charAt(0) == 'Y') {
 				again = false;
 			}
 		}
+
 		write();
 	}
 
@@ -127,11 +129,13 @@ public class CalibrateColor {
 
 		double minscal = Double.MAX_VALUE;
 		String color = "";
+		
 		System.out.println("Sample : " + sample[0] +", " + sample[1] + ", " + sample[2] + ".");
 
 		double scalaire = Scalaire.scalaire(sample, blue);
 		System.out.println("Blue : " + scalaire);
 		// s.next();
+
 		if (scalaire < minscal) {
 			minscal = scalaire;
 			color = "blue";

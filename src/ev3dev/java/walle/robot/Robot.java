@@ -63,4 +63,7 @@ public class Robot {
 	public void testColor() {
 		cs.test();
 	}
+	public void reCalibrate() {
+		cs.reCalibrate();
+	}
 }

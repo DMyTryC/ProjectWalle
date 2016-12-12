@@ -31,6 +31,10 @@ public class ColorSensor {
 		}
 	}
 
+	/**
+	 * Compare la couleur sous le robot à celle de path_color.
+	 * @return Vrai si le robot se trouve sur la bonne couleur
+	 */
 	public boolean onPath() {
 		path_color = CalibrateColor.getYellow();
 		float[] sample = new float[average.sampleSize()];
@@ -47,6 +51,9 @@ public class ColorSensor {
 
 	}
 
+	/**
+	 * Affiche continuellement pendant 20 secondes le résultat de onPath.
+	 */
 	public void test() {
 		for (int i = 0; i < 100; ++i) {
 			Delay.msDelay(200);
@@ -54,6 +61,9 @@ public class ColorSensor {
 		}
 
 	}
+	/**
+	 * Recalibre les couleurs.
+	 */
 	public void reCalibrate() {
 		CalibrateColor.calibrate(average);
 	}

@@ -9,6 +9,10 @@ import java.util.Scanner;
 import lejos.robotics.SampleProvider;
 import ev3dev.java.walle.utils.Scalaire;
 
+/**
+ * Classe statique contenant les différentes couleurs calibrées par et pour ColorSensor
+ */
+
 public class CalibrateColor {
 
 	private static float[] blue = new float[3];
@@ -21,6 +25,10 @@ public class CalibrateColor {
 
 	private static Scanner s = new Scanner(System.in);
 
+	/**
+	 * Une série de getter pour les couleurs
+	 */
+	
 	public static float[] getBlue() {
 		return blue;
 	}
@@ -49,9 +57,14 @@ public class CalibrateColor {
 		return green;
 	}
 
-	private CalibrateColor() {
-	}
+	private CalibrateColor() {}
 
+	/**
+	 * Fonction permettant de calibrer les differentes couleurs
+	 * en utilisant le ColorSenor. 
+	 * 
+	 * @param average: Le SampleProvider fourni par ColorSensor
+	 */
 	public static void calibrate(SampleProvider average) {
 
 		boolean again = true;
@@ -125,6 +138,12 @@ public class CalibrateColor {
 		write();
 	}
 
+	/**
+	 * Fonction qui compare une couleur à la liste des couleurs déjà calibrées
+	 * et qui affiche et retourne la couleur la plus proche.
+	 * @param sample : La couleur à vérifier.
+	 * @return La couleur trouvée.
+	 */
 	public static String testColor(float[] sample) {
 
 		double minscal = Double.MAX_VALUE;
@@ -193,8 +212,11 @@ public class CalibrateColor {
 		return color;
 	}
 
+	/**
+	 * Ecrit les couleurs actuellement en mémoire dans un ficher
+	 * pour pouvoir les recharger plus tard.
+	 */
 	private static void write() {
-		/** Sortir les valeurs dans un fichier */
 
 		PrintWriter w;
 		try {
@@ -248,6 +270,9 @@ public class CalibrateColor {
 		}
 	}
 
+	/**
+	 * Charge les couleurs du ficher colors.data dans la mémoire
+	 */
 	public static void load() {
 		float[] colors = new float[21];
 		try (BufferedReader br = new BufferedReader(new FileReader(
@@ -258,7 +283,6 @@ public class CalibrateColor {
 			for (int i = 0; (sCurrentLine = br.readLine()) != null && i < 21; ++i) {
 				float current = Float.parseFloat(sCurrentLine
 						.substring(sCurrentLine.lastIndexOf("=") + 1));
-				System.out.println(current);
 				colors[i] = current;
 			}
 

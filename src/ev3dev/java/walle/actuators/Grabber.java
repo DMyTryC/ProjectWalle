@@ -3,26 +3,37 @@ package ev3dev.java.walle.actuators;
 import lejos.utility.Delay;
 import ev3dev.hardware.motor.EV3MediumRegulatedMotor;
 
+/**
+ * Classe qu gère la pince du robot1
+ */
 public class Grabber {
 
 	private EV3MediumRegulatedMotor gm;
-	private static int SPEED = 500;
-	private static int RAMP = 200;
+	private static int SPEED = 1000;
 	private boolean isOpen;
 	
 
-	public Grabber(String sensorPort) {
-		gm = new EV3MediumRegulatedMotor(sensorPort);
+	/**
+	 * Connecte et calibre le hardware
+	 * @param motorPort Le port du moteur
+	 */
+	public Grabber(String motorPort) {
+		gm = new EV3MediumRegulatedMotor(motorPort);
+		init();
 	}
 
+	/**
+	 * Set la vitesse du moteur à SPEED.
+	 */
 	private void set() {
 		gm.setSpeed(SPEED);
-		gm.setRampUp(RAMP);
-		gm.setRampDown(RAMP);
 		System.out.println("Speed has been set to " + gm.getSpeed());
-		
 	}
-	public void init() {
+	
+	/**
+	 * Place la pince en position initiale et règle les distance d'ouverture et fermeture
+	 */
+	private void init() {
 		
 		set();
 		System.out.println("INIT...");
@@ -43,35 +54,46 @@ public class Grabber {
 		open();
 	}
 	
+	/**
+	 * Ouvre la pince.
+	 */
 	public void open(){
 		System.out.println("OPENNING...");
-		gm.rotateTo(-2500);
+		gm.rotateTo(-2500, true);
+		while(gm.isMoving())
+			if (gm.isStalled())
+				gm.stop();
 		System.out.println("OPENED. Position = " + gm.getTachoCount());
 		isOpen = true;
 	}
 	
+	/**
+	 * Ferme la pince.
+	 */
 	public void close(){
 		System.out.println("CLOSING...");
-		gm.rotateTo(-3300);
+		gm.rotateTo(-3300, true);
+		while(gm.isMoving())
+			if (gm.isStalled())
+				gm.stop();
 		System.out.println("CLOSED. Position = " + gm.getTachoCount());
 		isOpen = false;
 	}
 	
+	/**
+	 * Indique si la pince est ouverte.
+	 * @return Vrai si la pince est ouverte.
+	 */
 	public boolean isOpen(){
-		return isOpen();
+		return isOpen;
 	}
 	
-	public void changeSpeed(int speed, int time){
+	/**
+	 * Change la vitesse.
+	 * @param speed La nouvelle vitesse
+	 */
+	private void changeSpeed(int speed){
 		SPEED = speed;
-		RAMP = time;
-		gm.setRampDown(200);
 		set();
-	}
-	
-	public boolean isStalled(){
-		if (gm.isStalled()){
-			return true;
-		}
-		return false;
 	}
 }

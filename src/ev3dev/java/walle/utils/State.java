@@ -1,9 +1,8 @@
-package ev3dev.java.walle.robot;
+package ev3dev.java.walle.utils;
 
-import java.util.HashSet;
 import java.util.Set;
 
-import ev3dev.java.walle.utils.Coordonnees;
+/** TODO : ABSOLUMENT TOUT */
 
 public class State {
 	

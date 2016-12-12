@@ -1,8 +1,8 @@
-package ev3dev.java.walle;
+package ev3dev.java.walle.sensors;
 import ev3dev.hardware.sensor.ev3.EV3TouchSensor;
 
 /**
- * Extends the EV3TouchSensor to provide it with isPressed() functionality.
+ * Etends le EV3TouchSensor pour fournir isPressed().
  */
 
 public class TouchSensor extends EV3TouchSensor
@@ -12,6 +12,10 @@ public class TouchSensor extends EV3TouchSensor
         super(port);
     }
 
+    /**
+     * Indique si le touchSensor est enfoncé.
+     * @return Vrai si le touchSensor est enfoncé.
+     */
     public boolean isPressed()
     {
         float[] sample = new float[1];

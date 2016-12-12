@@ -1,4 +1,4 @@
-package ev3dev.java.walle.robot;
+package ev3dev.java.walle.utils;
 
 public class Ligne_X extends Ligne {
 
